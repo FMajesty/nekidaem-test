@@ -1,0 +1,90 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <style>
+        ul.hr {
+            margin: 0;
+            padding: 4px;
+        }
+
+        ul.hr li {
+            display: inline;
+            margin-right: 5px;
+            padding: 3px;
+        }
+    </style>
+</head>
+<body>
+<ul class="hr">
+    <li><a href="/">Home</a></li>
+    {% if request.user.is_anonymous %}
+        <li><a href="{% url 'login' %}">Login</a></li>
+    {% else %}
+        <li><a href="{% url 'logout' %}">Logout</a></li>
+    {% endif %}
+    {% if not request.user.is_anonymous %}
+        <li><a href="{% url 'blog_app:blog_articles' pk=request.user.blog.pk %}">Мy blog</a></li>
+        <li><a href="{% url 'blog_app:add_article' %}">New article</a></li>
+        <li><a href="{% url 'feed_app:subscriptions' %}">Subscriptions</a></li>
+    {% endif %}
+    <li><a href="{% url 'blog_app:all_blog' %}">All Blog's</a></li>
+</ul>
+<hr>
+</body>
+</html> -->
+<head>
+  <title>
+    {% block title %}
+      BlogEngine
+    {% endblock %}
+  </title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light background-color:we3f2fd">
+  <a class="navbar-brand" href="/">BlogEngine</a>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        {% if not request.user.is_anonymous %}
+          <span class="nav-link">Hello, {{ request.user.username }}!</span>
+        {% endif %}
+      </li>
+      <li class="nav-item">
+        {% if request.user.is_anonymous %}
+          <a href="{% url 'login' %}" class="nav-link">Log In</a>
+        {% else %}
+          <a href="{% url 'logout' %}" class="nav-link">Logout</a>
+        {% endif %}
+      </li>
+      <li class="nav-item"><a href="{% url 'blog_app:all_blog' %}" class="nav-link">All Blogs</a></li>
+      <li class="nav-item">
+        <a class="nav-link" href="/">Feed</a>
+      </li>
+      {% if not request.user.is_anonymous %}
+        <li class="nav-item"><a href="{% url 'blog_app:blog_articles' pk=request.user.blog.pk %}" class="nav-link">Мy blog</a></li>
+        <li class="nav-item"><a href="{% url 'blog_app:add_article' %}" class="nav-link">New article</a></li>
+        <li class="nav-item"><a href="{% url 'feed_app:subscriptions' %}" class="nav-link">Subscriptions</a></li>
+      {% endif %}
+    </ul>
+    <!-- <form class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form> -->
+  </div>
+</nav>
+
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-6 offset-md-2">
+      {% block page_content %}
+        <div class="alert alert-primary" role="alert">
+          There's content.
+        </div>
+      {% endblock %}
+    </div>
+  </div>
+</div>
+</body>

@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  Login
+{% endblock %}
+
+{% block page_content %}
+  <form action="{% url 'login' %}" method="post">
+    {% csrf_token %}
+    <div class="form-row align-items-center">
+      <div class="col-auto">
+        <label class="sr-only" for="inlineFormInputGroup">Username</label>
+        <div class="input-group mb-2">
+          <div class="input-group-prepend">
+            <div class="input-group-text">@</div>
+          </div>
+          <input type="text" class="form-control" name="username" id="id_username" placeholder="Your username" autofocus required>
+        </div>
+      </div>
+      <div class="col-auto">
+        <label class="sr-only" for="inlineFormInputGroup">Password</label>
+        <div class="input-group mb-2">
+          <div class="input-group-prepend">
+            <div class="input-group-text">#</div>
+          </div>
+          <input type="password" class="form-control" name="password" id="id_password" placeholder="Your password" required>
+        </div>
+      </div>
+      <div class="col-auto">
+        <button type="submit" class="btn btn-primary mb-2">Log In</button>
+      </div>
+    </div>
+    {% if form.errors %}
+    <div class="card">
+      <h5 class="card-header">errors:</h5>
+      <div class="card-body">
+        <p class="card-text">{{ form.errors }}</p>
+      </div>
+    </div>
+    {% endif %}
+  </form>
+{% endblock %}
